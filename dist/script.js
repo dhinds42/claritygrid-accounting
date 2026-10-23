@@ -74,10 +74,10 @@ if(form){
     const resultNote=result.querySelector('.form-note');
     if(activeKey==='energy'){
       submitButton.type='button';
-      submitButton.innerHTML='Complete secure energy quote packet <span>↗</span>';
-      submitButton.onclick=()=>window.open('https://form.jotform.com/262890751156059','_blank','noopener');
-      resultSteps.innerHTML='<li>Open the secure commercial-energy intake.</li><li>Complete business, service, supplier, and timing details.</li><li>Upload electric and natural-gas bills in their separately labeled fields.</li>';
-      resultNote.textContent='Utility bills are collected through the secure quote form, not email. Uploading documents does not enroll your business with a supplier.';
+      submitButton.innerHTML='Start preliminary energy quote request <span>↗</span>';
+      submitButton.onclick=()=>window.open('https://form.jotform.com/262891329339064','_blank','noopener');
+      resultSteps.innerHTML='<li>Open the secure preliminary quote request.</li><li>Provide business, commodity, location, supplier, billing, and timing details.</li><li>If the request qualifies, ClarityGrid will provide the comprehensive procurement intake as stage two.</li>';
+      resultNote.textContent='Available utility bills and contracts are collected through secure upload fields, not email. Submitting a request does not enroll your business with a supplier.';
     }else{
       submitButton.type='submit';
       submitButton.innerHTML='Send my consultation request <span>↗</span>';

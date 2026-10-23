@@ -1,0 +1,22 @@
+[id] {
+  scroll-margin-top: 96px;
+}
+
+.nav-links > a {
+  white-space: nowrap;
+}
+
+.nav-links > a:focus-visible,
+.menu:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 620px) {
+  [id] { scroll-margin-top: 82px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
