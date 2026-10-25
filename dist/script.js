@@ -33,15 +33,12 @@ if(form){
   const moveAssessmentIntoView=target=>{
     if(!target)return;
     form.style.overflowAnchor='none';
-    const focusTarget=target.matches('fieldset')?target.querySelector('legend'):target;
-    focusTarget.setAttribute('tabindex','-1');
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      focusTarget.focus({preventScroll:true});
-      const navHeight=document.querySelector('.nav-wrap')?.getBoundingClientRect().height||0;
-      const top=target.getBoundingClientRect().top+window.scrollY-navHeight-24;
-      const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({top:Math.max(0,top),behavior:reduceMotion?'auto':'smooth'});
-    }));
+    const navHeight=document.querySelector('.nav-wrap')?.getBoundingClientRect().height||0;
+    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const focusTarget=target.querySelector('input,select,textarea,button')||target;
+    target.style.scrollMarginTop=`${navHeight+24}px`;
+    target.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
+    focusTarget.focus({preventScroll:true});
   };
 
   const selectedService=()=>String(new FormData(form).get('service')||'');
