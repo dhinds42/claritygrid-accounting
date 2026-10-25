@@ -30,6 +30,18 @@ if(form){
   let current=0;
   let activeKey='';
 
+  const moveAssessmentIntoView=target=>{
+    if(!target)return;
+    target.setAttribute('tabindex','-1');
+    requestAnimationFrame(()=>{
+      const navHeight=document.querySelector('.nav-wrap')?.getBoundingClientRect().height||0;
+      const top=target.getBoundingClientRect().top+window.scrollY-navHeight-24;
+      const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      target.focus({preventScroll:true});
+      window.scrollTo({top:Math.max(0,top),behavior:reduceMotion?'auto':'smooth'});
+    });
+  };
+
   const selectedService=()=>String(new FormData(form).get('service')||'');
   const selectedConfig=()=>Object.entries(assessment).find(([,config])=>config.match===selectedService())||[];
   const consultationInbox={
@@ -65,7 +77,7 @@ if(form){
 
   next.addEventListener('click',()=>{
     if(!validateStep())return;
-    if(current<steps.length-1){current++;showStep();steps[current].querySelector('input,select,textarea')?.focus();return;}
+    if(current<steps.length-1){current++;showStep();moveAssessmentIntoView(steps[current]);return;}
     const [,config]=selectedConfig();
     document.getElementById('result-title').textContent=config?.result[0]||selectedService();
     document.getElementById('result-copy').textContent=config?.result[1]||'A focused discovery call will confirm scope, timing, systems, and the most practical engagement structure.';
@@ -85,10 +97,10 @@ if(form){
       resultSteps.innerHTML='<li>Review the prepared request.</li><li>Send it from your email application.</li><li>Devon will follow up to confirm fit and consultation timing.</li>';
       resultNote.textContent='Your request is routed to the ClarityGrid inbox assigned to the service you selected. Do not include passwords, bank credentials, Social Security numbers, or sensitive documents by email.';
     }
-    steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';result.hidden=false;result.focus();
+    steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';result.hidden=false;moveAssessmentIntoView(result);
   });
 
-  back.addEventListener('click',()=>{if(current>0){current--;showStep();}});
+  back.addEventListener('click',()=>{if(current>0){current--;showStep();moveAssessmentIntoView(steps[current]);}});
 
   form.addEventListener('change',event=>{if(event.target.name==='service'&&current===0)activeKey='';});
 
