@@ -34,11 +34,13 @@ if(form){
     if(!target)return;
     form.style.overflowAnchor='none';
     const navHeight=document.querySelector('.nav-wrap')?.getBoundingClientRect().height||0;
-    const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const focusTarget=target.querySelector('input,select,textarea,button')||target;
-    target.style.scrollMarginTop=`${navHeight+24}px`;
-    target.scrollIntoView({behavior:reduceMotion?'auto':'smooth',block:'start'});
     focusTarget.focus({preventScroll:true});
+    const top=target.getBoundingClientRect().top+window.scrollY-navHeight-24;
+    const previousScrollBehavior=document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior='auto';
+    window.scrollTo(0,Math.max(0,top));
+    requestAnimationFrame(()=>{document.documentElement.style.scrollBehavior=previousScrollBehavior;});
   };
 
   const selectedService=()=>String(new FormData(form).get('service')||'');
