@@ -32,14 +32,16 @@ if(form){
 
   const moveAssessmentIntoView=target=>{
     if(!target)return;
-    target.setAttribute('tabindex','-1');
-    requestAnimationFrame(()=>{
+    form.style.overflowAnchor='none';
+    const focusTarget=target.matches('fieldset')?target.querySelector('legend'):target;
+    focusTarget.setAttribute('tabindex','-1');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      focusTarget.focus({preventScroll:true});
       const navHeight=document.querySelector('.nav-wrap')?.getBoundingClientRect().height||0;
       const top=target.getBoundingClientRect().top+window.scrollY-navHeight-24;
       const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      target.focus({preventScroll:true});
       window.scrollTo({top:Math.max(0,top),behavior:reduceMotion?'auto':'smooth'});
-    });
+    }));
   };
 
   const selectedService=()=>String(new FormData(form).get('service')||'');
