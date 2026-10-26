@@ -88,8 +88,21 @@ if(form){
 
   const validateStep=()=>{for(const field of steps[current].querySelectorAll('input,select,textarea')){if(!field.checkValidity()){field.reportValidity();return false;}}return true;};
 
+  const consultationService={
+    'Ongoing outsourced accounting':'Outsourced accounting','Accounting cleanup or catch-up':'Accounting cleanup and catch-up','Fractional controller support':'Fractional controller support','QuickBooks or systems implementation':'Systems implementation','Payroll processing and integration':'Payroll processing and payroll accounting','Transportation accounting and reporting':'Transportation accounting and reporting','Real estate accounting':'Real estate accounting','Commercial lease abstraction':'Commercial lease abstraction','Energy cost management and commercial energy brokerage':'Commercial energy solutions'
+  };
+  const consultationTiming={'As soon as possible':'Immediately','Within 30 days':'Within 30 days','Within 60–90 days':'Within 60–90 days','Planning ahead':'Planning ahead / not sure'};
   const openConsultationForm=()=>{
-    window.open(consultationFormUrl,'_blank','noopener');
+    const data=new FormData(form);
+    const fullName=String(data.get('name')||'').trim().split(/\s+/);
+    const firstName=fullName.shift()||'';
+    const lastName=fullName.join(' ');
+    const scope=[...form.querySelectorAll('[data-scope-input]')].map(field=>`${field.dataset.label}: ${field.value}`).filter(line=>!line.endsWith(': '));
+    const need=[`Assessment recommendation: ${data.get('service')||'Not specified'}`,`Current situation: ${data.get('condition')||'Not specified'}`,`Business locations: ${data.get('locations')||'Not specified'}`,...scope,data.get('message')?`Additional details: ${data.get('message')}`:''].filter(Boolean).join('\n');
+    const url=new URL(consultationFormUrl);
+    const prefill={'q3_fullname1[first]':firstName,'q3_fullname1[last]':lastName,q4_textbox2:String(data.get('company')||''),q5_email3:String(data.get('email')||''),'q6_phone4[full]':String(data.get('phone')||''),q8_radio6:consultationService[String(data.get('service')||'')]||'Other / not sure',q9_textarea7:need,q10_radio8:consultationTiming[String(data.get('urgency')||'')]||'Planning ahead / not sure'};
+    Object.entries(prefill).forEach(([key,value])=>{if(value)url.searchParams.set(key,value);});
+    window.open(url.toString(),'_blank','noopener');
   };
 
   next.addEventListener('click',()=>{
@@ -111,7 +124,7 @@ if(form){
       submitButton.type='button';
       submitButton.innerHTML='Complete secure consultation request <span>↗</span>';
       submitButton.onclick=openConsultationForm;
-      resultSteps.innerHTML='<li>Open the secure consultation request.</li><li>Confirm your contact details, need, timing, and preferred next step.</li><li>ClarityGrid will review the inquiry and respond using your selected contact method.</li>';
+      resultSteps.innerHTML='<li>Open the secure consultation request with your assessment answers already filled in.</li><li>Review the transferred details and select your preferred next step.</li><li>ClarityGrid will review the inquiry and respond using your selected contact method.</li>';
       resultNote.textContent='New inquiries are normally reviewed within one business day. Appointment and callback requests are not confirmed until ClarityGrid sends confirmation. Do not submit passwords, banking credentials, Social Security numbers, tax IDs, or confidential financial documents.';
     }
     steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';progress?.setAttribute('aria-valuenow',String(steps.length));progress?.setAttribute('aria-valuetext','Assessment complete');result.hidden=false;moveAssessmentIntoView(result);
