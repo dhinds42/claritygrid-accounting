@@ -1,0 +1,9 @@
+{
+  "name": "claritygrid-product-store",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --check app.js && node --check catalog.js && node --check worker/src/index.js"
+  }
+}

@@ -1,0 +1,31 @@
+name = "claritygrid-product-delivery"
+main = "src/index.js"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+CHECKOUT_ENABLED = "false"
+STORE_PUBLIC_URL = "https://products.claritygridaccounting.com"
+PUBLIC_WORKER_URL = "https://downloads.claritygridaccounting.com"
+ALLOWED_ORIGINS = "https://products.claritygridaccounting.com"
+FROM_EMAIL = "orders@claritygridaccounting.com"
+FROM_NAME = "ClarityGrid Accounting & Advisory"
+SUPPORT_EMAIL = "clientservices@claritygridaccounting.com"
+DOWNLOAD_EXPIRY_DAYS = "7"
+MAX_DOWNLOADS = "3"
+
+[[r2_buckets]]
+binding = "PRODUCT_FILES"
+bucket_name = "claritygrid-digital-products"
+
+[[kv_namespaces]]
+binding = "DOWNLOAD_TOKENS"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+# Add through Cloudflare secrets, never to this file:
+# STRIPE_SECRET_KEY
+# STRIPE_WEBHOOK_SECRET
+# STORE_CONFIG_JSON
+# ZEPTOMAIL_TOKEN
+# ZOHO_FLOW_WEBHOOK_URL
+# ZOHO_FLOW_WEBHOOK_SECRET
