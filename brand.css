@@ -1,0 +1,28 @@
+.brand-logo img {
+  display: block;
+  width: 222px;
+  height: auto;
+}
+
+.footer-logo img {
+  width: 205px;
+}
+
+.page-brand.logo-image img {
+  display: block;
+  width: 222px;
+  height: auto;
+}
+
+.page-footer .footer-brand-logo img {
+  display: block;
+  width: 230px;
+  height: auto;
+}
+
+@media (max-width: 620px) {
+  .brand-logo img,
+  .page-brand.logo-image img {
+    width: 180px;
+  }
+}

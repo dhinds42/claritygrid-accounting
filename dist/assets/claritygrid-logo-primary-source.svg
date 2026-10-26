@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="150" viewBox="0 0 760 150" role="img" aria-labelledby="title desc">
+  <title id="title">ClarityGrid Accounting &amp; Advisory</title>
+  <desc id="desc">The official ClarityGrid logo in navy and gold.</desc>
+  <rect x="5" y="5" width="140" height="140" rx="14" fill="#0b2239"/>
+  <rect x="15" y="15" width="120" height="120" rx="8" fill="none" stroke="#d8a84e" stroke-width="3"/>
+  <text x="75" y="94" fill="#d8a84e" font-family="DejaVu Sans,Arial,sans-serif" font-size="52" font-weight="700" text-anchor="middle" letter-spacing="-3">CG</text>
+  <text x="174" y="72" fill="#0b2239" font-family="DejaVu Sans,Arial,sans-serif" font-size="52" font-weight="700" letter-spacing="-2">ClarityGrid</text>
+  <line x1="177" y1="91" x2="708" y2="91" stroke="#d8a84e" stroke-width="2"/>
+  <text x="177" y="121" fill="#566473" font-family="DejaVu Sans,Arial,sans-serif" font-size="19" font-weight="600" letter-spacing="4">ACCOUNTING &amp; ADVISORY</text>
+</svg>
