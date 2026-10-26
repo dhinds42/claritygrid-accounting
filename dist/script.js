@@ -60,12 +60,7 @@ if(form){
 
   const selectedService=()=>String(new FormData(form).get('service')||'');
   const selectedConfig=()=>Object.entries(assessment).find(([,config])=>config.match===selectedService())||[];
-  const consultationInbox={
-    'Transportation accounting and reporting':'transportation@claritygridaccounting.com',
-    'Real estate accounting':'realestate@claritygridaccounting.com',
-    'Commercial lease abstraction':'realestate@claritygridaccounting.com'
-  };
-  const consultationDestination=service=>consultationInbox[service]||'consultations@claritygridaccounting.com';
+  const consultationFormUrl='https://form.jotform.com/262977568063068';
   const escapeHtml=value=>String(value).replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
 
   const renderBranch=()=>{
@@ -93,13 +88,17 @@ if(form){
 
   const validateStep=()=>{for(const field of steps[current].querySelectorAll('input,select,textarea')){if(!field.checkValidity()){field.reportValidity();return false;}}return true;};
 
+  const openConsultationForm=()=>{
+    window.open(consultationFormUrl,'_blank','noopener');
+  };
+
   next.addEventListener('click',()=>{
     if(!validateStep())return;
     if(current<steps.length-1){current++;showStep();moveAssessmentIntoView(steps[current]);return;}
     const [,config]=selectedConfig();
     document.getElementById('result-title').textContent=config?.result[0]||selectedService();
     document.getElementById('result-copy').textContent=config?.result[1]||'A focused discovery call will confirm scope, timing, systems, and the most practical engagement structure.';
-    const submitButton=result.querySelector('button[type="submit"]');
+    const submitButton=result.querySelector('.result-actions .button');
     const resultSteps=result.querySelector('ol');
     const resultNote=result.querySelector('.form-note');
     if(activeKey==='energy'){
@@ -109,11 +108,11 @@ if(form){
       resultSteps.innerHTML='<li>Open the secure preliminary quote request.</li><li>Provide business, commodity, location, supplier, billing, and timing details.</li><li>If the request qualifies, ClarityGrid will provide the comprehensive procurement intake as stage two.</li>';
       resultNote.textContent='Available utility bills and contracts are collected through secure upload fields, not email. Submitting a request does not enroll your business with a supplier.';
     }else{
-      submitButton.type='submit';
-      submitButton.innerHTML='Send my consultation request <span>↗</span>';
-      submitButton.onclick=null;
-      resultSteps.innerHTML='<li>Review the prepared request.</li><li>Send it from your email application.</li><li>Devon will follow up to confirm fit and consultation timing.</li>';
-      resultNote.textContent='Your request is routed to the ClarityGrid inbox assigned to the service you selected. Do not include passwords, bank credentials, Social Security numbers, or sensitive documents by email.';
+      submitButton.type='button';
+      submitButton.innerHTML='Complete secure consultation request <span>↗</span>';
+      submitButton.onclick=openConsultationForm;
+      resultSteps.innerHTML='<li>Open the secure consultation request.</li><li>Confirm your contact details, need, timing, and preferred next step.</li><li>ClarityGrid will review the inquiry and respond using your selected contact method.</li>';
+      resultNote.textContent='New inquiries are normally reviewed within one business day. Appointment and callback requests are not confirmed until ClarityGrid sends confirmation. Do not submit passwords, banking credentials, Social Security numbers, tax IDs, or confidential financial documents.';
     }
     steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';progress?.setAttribute('aria-valuenow',String(steps.length));progress?.setAttribute('aria-valuetext','Assessment complete');result.hidden=false;moveAssessmentIntoView(result);
   });
@@ -127,13 +126,13 @@ if(form){
     if(option){option.checked=true;activeKey='';current=0;result.hidden=true;controls.hidden=false;showStep();}
   }));
 
+  document.getElementById('restart-assessment')?.addEventListener('click',()=>{
+    form.reset();activeKey='';current=0;result.hidden=true;controls.hidden=false;showStep();moveAssessmentIntoView(steps[0]);
+  });
+
   form.addEventListener('submit',event=>{
     event.preventDefault();
-    const data=new FormData(form);const service=data.get('service');
-    const scopeLines=[...form.querySelectorAll('[data-scope-input]')].map(field=>field.dataset.label+': '+(field.value||'Not provided')).join('\n');
-    const subject=encodeURIComponent('Qualified consultation request — '+service);
-    const body=encodeURIComponent('Hello Devon,\n\nI completed the ClarityGrid website assessment and would like to request a consultation.\n\nName: '+data.get('name')+'\nCompany: '+(data.get('company')||'Not provided')+'\nEmail: '+data.get('email')+'\nPhone: '+(data.get('phone')||'Not provided')+'\n\nPrimary need: '+service+'\nService-specific situation: '+data.get('condition')+'\nTiming: '+data.get('urgency')+'\nBusiness locations: '+data.get('locations')+'\n\nService scope:\n'+scopeLines+'\n\nAdditional details:\n'+(data.get('message')||'None provided')+'\n\nThank you.');
-    window.location.href='mailto:'+consultationDestination(String(service))+'?subject='+subject+'&body='+body;
+    if(validateStep())openConsultationForm();
   });
 
   showStep();

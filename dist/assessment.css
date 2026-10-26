@@ -18,6 +18,27 @@
 
 .service-scope[hidden] { display: none; }
 
+.form-controls[hidden] { display: none !important; }
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+  margin-top: 22px;
+}
+
+.result-actions .button,
+.result-actions .text-button {
+  min-height: 44px;
+}
+
+.result-actions .text-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .scope-heading {
   margin: 0;
   color: #805a16;
