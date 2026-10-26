@@ -102,7 +102,7 @@ if(form){
     const url=new URL(consultationFormUrl);
     const prefill={'q3_fullname1[first]':firstName,'q3_fullname1[last]':lastName,q4_textbox2:String(data.get('company')||''),q5_email3:String(data.get('email')||''),'q6_phone4[full]':String(data.get('phone')||''),q8_radio6:consultationService[String(data.get('service')||'')]||'Other / not sure',q9_textarea7:need,q10_radio8:consultationTiming[String(data.get('urgency')||'')]||'Planning ahead / not sure'};
     Object.entries(prefill).forEach(([key,value])=>{if(value)url.searchParams.set(key,value);});
-    window.open(url.toString(),'_blank','noopener');
+    window.open(url.toString().replace(/\+/g,'%20'),'_blank','noopener');
   };
 
   next.addEventListener('click',()=>{
