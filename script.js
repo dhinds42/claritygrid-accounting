@@ -1,7 +1,21 @@
 const menu=document.querySelector('.menu');
 const links=document.querySelector('.nav-links');
-menu?.addEventListener('click',()=>{const open=links.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'Close':'Menu'});
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{links.classList.remove('open');menu?.setAttribute('aria-expanded','false');if(menu)menu.textContent='Menu'}));
+const setMenuState=(open,{returnFocus=false}={})=>{
+  if(!menu||!links)return;
+  links.classList.toggle('open',open);
+  menu.setAttribute('aria-expanded',String(open));
+  menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+  menu.textContent=open?'Close':'Menu';
+  if(returnFocus)menu.focus();
+};
+menu?.addEventListener('click',()=>setMenuState(!links.classList.contains('open')));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>setMenuState(false)));
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&links?.classList.contains('open'))setMenuState(false,{returnFocus:true});
+});
+document.addEventListener('click',event=>{
+  if(links?.classList.contains('open')&&!links.contains(event.target)&&event.target!==menu)setMenuState(false);
+});
 document.getElementById('year').textContent=new Date().getFullYear();
 
 const assessment={
@@ -23,6 +37,7 @@ if(form){
   const back=document.getElementById('back-step');
   const count=document.getElementById('step-count');
   const bar=document.getElementById('progress-bar');
+  const progress=document.getElementById('assessment-progress');
   const controls=form.querySelector('.form-controls');
   const result=document.getElementById('assessment-result');
   const conditionOptions=document.getElementById('condition-options');
@@ -70,6 +85,8 @@ if(form){
     steps.forEach((step,index)=>step.classList.toggle('active',index===current));
     count.textContent=`Step ${current+1} of ${steps.length}`;
     bar.style.width=`${((current+1)/steps.length)*100}%`;
+    progress?.setAttribute('aria-valuenow',String(current+1));
+    progress?.setAttribute('aria-valuetext',`Step ${current+1} of ${steps.length}`);
     back.hidden=current===0;
     next.innerHTML=current===steps.length-1?'See my recommendation <span>→</span>':'Continue <span>→</span>';
   };
@@ -98,7 +115,7 @@ if(form){
       resultSteps.innerHTML='<li>Review the prepared request.</li><li>Send it from your email application.</li><li>Devon will follow up to confirm fit and consultation timing.</li>';
       resultNote.textContent='Your request is routed to the ClarityGrid inbox assigned to the service you selected. Do not include passwords, bank credentials, Social Security numbers, or sensitive documents by email.';
     }
-    steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';result.hidden=false;moveAssessmentIntoView(result);
+    steps[current].classList.remove('active');controls.hidden=true;count.textContent='Assessment complete';bar.style.width='100%';progress?.setAttribute('aria-valuenow',String(steps.length));progress?.setAttribute('aria-valuetext','Assessment complete');result.hidden=false;moveAssessmentIntoView(result);
   });
 
   back.addEventListener('click',()=>{if(current>0){current--;showStep();moveAssessmentIntoView(steps[current]);}});

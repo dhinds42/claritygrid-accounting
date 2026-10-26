@@ -23,14 +23,16 @@
   <link rel="stylesheet" href="credentials.css">
   <link rel="stylesheet" href="flow.css">
   <link rel="stylesheet" href="real-estate.css">
+  <link rel="stylesheet" href="accessibility.css?v=20261026-1">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ProfessionalService","@id":"https://www.claritygridaccounting.com/#business","name":"ClarityGrid Accounting & Advisory","url":"https://www.claritygridaccounting.com/","email":"contact@claritygridaccounting.com","description":"Outsourced accounting, fractional controller, cleanup, payroll integration and specialized industry accounting services.","founder":{"@type":"Person","name":"Devon Hinds"},"areaServed":[{"@type":"Country","name":"United States"},{"@type":"City","name":"Lorain"},{"@type":"State","name":"Ohio"}]},{"@type":"WebSite","@id":"https://www.claritygridaccounting.com/#website","url":"https://www.claritygridaccounting.com/","name":"ClarityGrid Accounting & Advisory","publisher":{"@id":"https://www.claritygridaccounting.com/#business"}},{"@type":"Person","@id":"https://www.claritygridaccounting.com/#devon-hinds","name":"Devon Hinds","jobTitle":"Accounting Consultant and Fractional Controller","worksFor":{"@id":"https://www.claritygridaccounting.com/#business"}}]}</script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <header class="nav-wrap">
     <nav class="nav" aria-label="Main navigation">
-      <a class="brand" href="#top" aria-label="ClarityGrid home"><span class="brand-mark">CG</span><span>ClarityGrid<span class="brand-sub">Accounting &amp; Advisory</span></span></a>
-      <button class="menu" aria-label="Open navigation" aria-expanded="false">Menu</button>
-      <div class="nav-links">
+      <a class="brand" href="#main-content" aria-label="ClarityGrid home"><span class="brand-mark">CG</span><span>ClarityGrid<span class="brand-sub">Accounting &amp; Advisory</span></span></a>
+      <button class="menu" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
+      <div class="nav-links" id="primary-navigation">
         <a href="#services">Services</a><a href="#approach">Approach</a><a href="#expertise">Expertise</a><a href="#credentials">Credentials</a>
         <a href="#energy-solutions">Energy Solutions</a><a class="client-link" href="#digital-service">Client access</a>
         <a class="button small" href="#consultation">Start your assessment</a>
@@ -38,7 +40,7 @@
     </nav>
   </header>
 
-  <main id="top">
+  <main id="main-content" tabindex="-1">
     <section class="hero">
       <div class="hero-inner">
         <div class="eyebrow"><span></span>Outsourced accounting · Fractional controller</div>
@@ -142,7 +144,7 @@
         <a href="#services">All Services</a>
         <a href="#consultation">Assessment</a>
         <a href="#digital-service">Client Access</a>
-        <a href="#top">Back to top ↑</a>
+        <a href="#main-content">Back to top ↑</a>
       </nav>
       <p class="energy-intake-note">For security, upload utility statements and supply contracts only through the secure form. Do not email bills or submit Social Security numbers, banking passwords, government identification, tax returns, or unrelated personal records.</p>
     </section>
@@ -233,7 +235,7 @@
         <div class="contact-direct"><span>Prefer to contact us directly?</span><a href="mailto:contact@claritygridaccounting.com">contact@claritygridaccounting.com</a></div>
       </div>
       <form class="consultation-form assessment" id="consultation-form">
-        <div class="assessment-progress" aria-label="Assessment progress"><span id="progress-bar"></span></div>
+        <div class="assessment-progress" id="assessment-progress" role="progressbar" aria-label="Assessment progress" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-valuetext="Step 1 of 4"><span id="progress-bar"></span></div>
         <p class="step-count" id="step-count">Step 1 of 4</p>
 
         <fieldset class="form-step active" data-step="1">
@@ -281,7 +283,7 @@
           <label class="consent"><input type="checkbox" name="consent" required><span>I agree to be contacted about this request. I understand this assessment is general information and not accounting, tax, or legal advice.</span></label>
         </fieldset>
 
-        <section class="assessment-result" id="assessment-result" aria-live="polite" hidden>
+        <section class="assessment-result" id="assessment-result" role="status" aria-live="polite" aria-atomic="true" tabindex="-1" hidden>
           <p class="result-kicker">Your recommended starting point</p>
           <h3 id="result-title"></h3>
           <p id="result-copy"></p>
@@ -305,6 +307,6 @@
     <div class="footer-links"><a href="/about/">About</a> · <a href="/resources/">Resources</a> · <a href="/contact/">Contact</a> · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/accessibility/">Accessibility</a> · <a href="/disclosures/">Disclosures</a></div>
     <span>© <span id="year"></span> ClarityGrid Accounting &amp; Advisory</span>
   </footer>
-  <script src="script.js?v=20261025-3"></script>
+  <script src="script.js?v=20261026-1"></script>
 </body>
 </html>
