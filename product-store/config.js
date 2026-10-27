@@ -1,5 +1,5 @@
 window.CLARITYGRID_STORE_CONFIG = Object.freeze({
-  checkoutApiBase: "",
+  checkoutApiBase: "https://claritygrid-product-delivery.dpnservice.workers.dev",
   checkoutEnabled: false,
   launchStatus: "Preview — checkout activation pending final approval",
   mainSiteUrl: "https://www.claritygridaccounting.com/",
