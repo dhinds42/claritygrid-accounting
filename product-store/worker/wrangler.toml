@@ -1,0 +1,22 @@
+name = "claritygrid-product-delivery"
+main = "src/index.js"
+compatibility_date = "2026-10-26"
+workers_dev = true
+
+[vars]
+CHECKOUT_ENABLED = "false"
+STORE_PUBLIC_URL = "https://claritygrid-product-store.pages.dev"
+PUBLIC_WORKER_URL = "https://claritygrid-product-delivery.dpnservice.workers.dev"
+ALLOWED_ORIGINS = "https://claritygrid-product-store.pages.dev"
+FROM_NAME = "ClarityGrid Accounting & Advisory"
+SUPPORT_EMAIL = "office@claritygridaccounting.com"
+DOWNLOAD_EXPIRY_DAYS = "7"
+MAX_DOWNLOADS = "3"
+
+[[r2_buckets]]
+binding = "PRODUCT_FILES"
+bucket_name = "claritygrid-digital-products"
+
+[[kv_namespaces]]
+binding = "DOWNLOAD_TOKENS"
+id = "b4ebd6befaf94d25885d68e53ff8a25b"
