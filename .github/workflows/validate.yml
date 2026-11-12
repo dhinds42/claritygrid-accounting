@@ -1,0 +1,27 @@
+name: Validate marketing site
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check script.js
+          node --check integrations.js
+          node --check scripts/build.mjs
+          node --check scripts/generate-seo-pages.mjs
+          npm run check --prefix product-store
+      - name: Verify reproducible marketing build
+        run: |
+          node scripts/build.mjs
+          git diff --exit-code -- dist
+      - name: Keep checkout disabled
+        run: node scripts/check-checkout-disabled.mjs

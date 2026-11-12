@@ -30,10 +30,13 @@
   privacyChoices.className='cg-privacy-choices';
   privacyChoices.textContent='Privacy choices';
 
+  const syncPrivacyState=()=>document.body.classList.toggle('cg-consent-open',!consentBanner.hidden);
   const setConsent=value=>{
     try{localStorage.setItem(consentKey,value);}catch(error){}
     consentBanner.hidden=true;
     privacyChoices.hidden=false;
+    syncPrivacyState();
+    if(value==='declined'&&salesIqLoaded){window.location.reload();return;}
     if(value==='accepted')loadSalesIQ();
     privacyChoices.focus();
   };
@@ -44,6 +47,7 @@
   privacyChoices.addEventListener('click',()=>{
     consentBanner.hidden=false;
     privacyChoices.hidden=true;
+    syncPrivacyState();
     consentBanner.querySelector('button')?.focus();
   });
 
@@ -58,7 +62,7 @@
   dialog.id='cg-booking-dialog';
   dialog.className='cg-booking-dialog';
   dialog.setAttribute('aria-labelledby','cg-booking-title');
-  dialog.innerHTML='<div class="cg-booking-shell"><header class="cg-booking-head"><div><p class="cg-booking-kicker">ClarityGrid consultation</p><p class="cg-booking-title" id="cg-booking-title">Choose an available appointment</p></div><button class="cg-booking-close" type="button" aria-label="Close appointment scheduler">×</button></header><div class="cg-booking-body"><div class="cg-booking-status" id="cg-booking-status" role="status"><strong>Loading secure appointment calendar…</strong><span>Select a time that works for you.</span></div><div id="inline-container"></div><p class="cg-booking-fallback">Calendar not displaying? <a href="'+bookingUrl+'" target="_blank" rel="noopener noreferrer">Open Zoho Bookings in a new window</a>.</p></div></div>';
+  dialog.innerHTML='<div class="cg-booking-shell"><header class="cg-booking-head"><div><p class="cg-booking-kicker">ClarityGrid Accounting &amp; Advisory</p><p class="cg-booking-title" id="cg-booking-title">Choose an available appointment</p></div><button class="cg-booking-close" type="button" aria-label="Close appointment scheduler">×</button></header><div class="cg-booking-body"><div class="cg-booking-status" id="cg-booking-status" role="status"><strong>Loading secure appointment calendar…</strong><span>Select a time that works for you.</span></div><div id="inline-container"></div><p class="cg-booking-fallback">Calendar not displaying? <a href="'+bookingUrl+'" target="_blank" rel="noopener noreferrer">Open Zoho Bookings in a new window</a>.</p></div></div>';
 
   document.body.append(dialog,launch,consentBanner,privacyChoices);
   let savedConsent='';
@@ -66,6 +70,7 @@
   if(savedConsent==='accepted')loadSalesIQ();
   else if(savedConsent==='declined')privacyChoices.hidden=false;
   else{consentBanner.hidden=false;privacyChoices.hidden=true;}
+  syncPrivacyState();
   const close=dialog.querySelector('.cg-booking-close');
   const status=dialog.querySelector('#cg-booking-status');
 
@@ -83,8 +88,16 @@
     initialized=true;
   };
 
-  launch.addEventListener('click',()=>{dialog.showModal();initialize();});
+  let bookingTrigger=launch;
+  const openBooking=event=>{bookingTrigger=event.currentTarget;dialog.showModal();document.body.classList.add('cg-booking-open');initialize();};
+  launch.addEventListener('click',openBooking);
+  document.querySelectorAll('[data-open-booking]').forEach(button=>button.addEventListener('click',openBooking));
+  const assessmentSection=document.querySelector('#consultation');
+  if(assessmentSection&&'IntersectionObserver' in window){
+    const observer=new IntersectionObserver(entries=>document.body.classList.toggle('cg-assessment-visible',entries[0].isIntersecting));
+    observer.observe(assessmentSection);
+  }
   close.addEventListener('click',()=>dialog.close());
   dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
-  dialog.addEventListener('close',()=>launch.focus());
+  dialog.addEventListener('close',()=>{document.body.classList.remove('cg-booking-open');bookingTrigger.focus();});
 })();

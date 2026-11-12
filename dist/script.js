@@ -3,11 +3,13 @@ const links=document.querySelector('.nav-links');
 const setMenuState=(open,{returnFocus=false}={})=>{
   if(!menu||!links)return;
   links.classList.toggle('open',open);
+  document.body.classList.toggle('cg-menu-open',open);
   menu.setAttribute('aria-expanded',String(open));
   menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');
   menu.textContent=open?'Close':'Menu';
   if(returnFocus)menu.focus();
 };
+window.matchMedia('(max-width: 900px)').addEventListener('change',()=>setMenuState(false));
 menu?.addEventListener('click',()=>setMenuState(!links.classList.contains('open')));
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>setMenuState(false)));
 document.addEventListener('keydown',event=>{
