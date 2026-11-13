@@ -16,7 +16,7 @@ body.cg-consent-open .cg-booking-launch,
 body.cg-consent-open #zsiq_float,
 body.cg-consent-open #zsiq_chat_wrap,
 body.cg-booking-open #zsiq_float,
-body.cg-booking-open #zsiq_chat_wrap { visibility: hidden !important; pointer-events: none !important; }
+body.cg-booking-open #zsiq_chat_wrap { display: none !important; pointer-events: none !important; }
 @media (max-width: 900px) {
   .nav { height: 76px; padding-inline: 18px; }
   .menu { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 12px; border: 1px solid #b9c2ca; background: #fff; color: #0b2239; font: 700 14px var(--sans); }
@@ -44,5 +44,5 @@ body.cg-booking-open #zsiq_chat_wrap { visibility: hidden !important; pointer-ev
 body.cg-assessment-visible .cg-booking-launch,
 body.cg-assessment-visible .cg-privacy-choices,
 body.cg-assessment-visible #zsiq_float,
-body.cg-assessment-visible #zsiq_chat_wrap { visibility: hidden !important; pointer-events: none !important; }
+body.cg-assessment-visible #zsiq_chat_wrap { display: none !important; pointer-events: none !important; }
 .contact-intro [data-open-booking] { margin-top: 24px; cursor: pointer; }
