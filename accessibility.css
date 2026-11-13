@@ -132,3 +132,6 @@ textarea {
     border: 2px solid ButtonText;
   }
 }
+
+/* Responsive display rules must respect HTML's hidden state. */
+[hidden] { display: none !important; }
