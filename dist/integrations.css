@@ -54,3 +54,6 @@ body.cg-assessment-visible #zsiq_chat_wrap { display: none !important; pointer-e
 .cg-footer-contact{text-align:center;padding:8px 12px}
 .cg-header-phone:focus-visible,.cg-assessment-phone:focus-visible,.cg-footer-phone:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
 @media(max-width:760px){.cg-header-phone{font-size:.82rem;padding:6px;margin:0 4px;white-space:normal;text-align:center}.cg-assessment-contact{padding:0 12px}}
+
+/* Keep the assessment call number together at desktop and mobile widths. */
+.cg-assessment-phone{display:inline-block;white-space:nowrap;overflow-wrap:normal;word-break:normal}
