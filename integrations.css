@@ -46,3 +46,11 @@ body.cg-assessment-visible .cg-privacy-choices,
 body.cg-assessment-visible #zsiq_float,
 body.cg-assessment-visible #zsiq_chat_wrap { display: none !important; pointer-events: none !important; }
 .contact-intro [data-open-booking] { margin-top: 24px; cursor: pointer; }
+
+/* ClarityGrid contact visibility on all marketing pages */
+.cg-header-phone{display:inline-flex;align-items:center;justify-content:center;margin:0 12px;padding:8px 10px;min-height:44px;font-weight:700;font-size:clamp(.85rem,1.4vw,1rem);white-space:nowrap;color:inherit;text-decoration:underline;text-underline-offset:3px}
+.cg-assessment-contact{margin:0 auto 1rem;text-align:center;font-weight:600;line-height:1.6}
+.cg-assessment-phone,.cg-footer-phone{font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.cg-footer-contact{text-align:center;padding:8px 12px}
+.cg-header-phone:focus-visible,.cg-assessment-phone:focus-visible,.cg-footer-phone:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+@media(max-width:760px){.cg-header-phone{font-size:.82rem;padding:6px;margin:0 4px;white-space:normal;text-align:center}.cg-assessment-contact{padding:0 12px}}
