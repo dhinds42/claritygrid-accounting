@@ -1,5 +1,25 @@
 (()=>{
   'use strict';
+
+  // Consistent, accessible business contact across marketing pages and assessment.
+  const phoneHref='tel:+18006179586';
+  const phoneText='(800) 617-9586';
+  const contactLink=(cls)=>{const a=document.createElement('a');a.className=cls;a.href=phoneHref;a.textContent='Call '+phoneText;a.setAttribute('aria-label','Call ClarityGrid at '+phoneText);return a;};
+  const siteHeader=document.querySelector('header.nav-wrap, header.page-nav');
+  if(siteHeader&&!siteHeader.querySelector('.cg-header-phone')){
+    const anchor=siteHeader.querySelector('.brand-logo, .page-brand');
+    const link=contactLink('cg-header-phone');
+    if(anchor)anchor.insertAdjacentElement('afterend',link);else siteHeader.appendChild(link);
+  }
+  const assessment=document.querySelector('#consultation');
+  if(assessment&&!assessment.querySelector('.cg-assessment-phone')){
+    const line=document.createElement('p');line.className='cg-assessment-contact';line.append('Questions about your assessment? ');line.appendChild(contactLink('cg-assessment-phone'));assessment.prepend(line);
+  }
+  const footer=document.querySelector('body > footer, footer');
+  if(footer&&!footer.querySelector('a[href="tel:+18006179586"]')){
+    const line=document.createElement('p');line.className='cg-footer-contact';line.appendChild(contactLink('cg-footer-phone'));footer.insertBefore(line,footer.firstChild);
+  }
+
   const bookingUrl='https://claritygridaccountingadvisory.zohobookings.com/portal-embed#/5012580000000035009';
   const privacyUrl='/privacy/';
   const consentKey='claritygrid-visitor-tools-consent-v1';
