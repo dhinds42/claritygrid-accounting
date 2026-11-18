@@ -13,7 +13,7 @@
   }
   const assessment=document.querySelector('#consultation');
   if(assessment&&!assessment.querySelector('.cg-assessment-phone')){
-    const line=document.createElement('p');line.className='cg-assessment-contact';line.append('Questions about your assessment? ');line.appendChild(contactLink('cg-assessment-phone'));assessment.prepend(line);
+    const line=document.createElement('p');line.className='cg-assessment-contact';line.append('Questions about your assessment? ');line.appendChild(contactLink('cg-assessment-phone'));(assessment.querySelector('.contact-intro')||assessment).appendChild(line);
   }
   const footer=document.querySelector('body > footer, footer');
   if(footer&&!footer.querySelector('a[href="tel:+18006179586"]')){
